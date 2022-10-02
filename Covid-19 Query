@@ -1,0 +1,28 @@
+-- Select columns from data
+SELECT 
+  date as Date,
+  EXTRACT(YEAR FROM date) as Year,
+  EXTRACT(MONTH FROM date) as Month,
+  country_region as Country,
+  province_state as Province,
+  latitude as Latitude,
+  longitude as Longitude,
+  location_geom as LocationPoint,
+  confirmed as Confirmed_infected,
+  deaths as Deaths,
+  --Calculate percetage of dead of confirmed infected
+  deaths / NULLIF(confirmed, 0)*100 as Percentage_dead_of_confirmed,
+  active as active,
+  combined_key As Combination_key,
+  
+FROM `bigquery-public-data.covid19_open_data_eu.compatibility_view` 
+--Choose Cuntries
+where 
+     country_region='Estonia' 
+  or country_region='Latvia' 
+  or country_region='Finland'
+
+--Sort by 
+ORDER BY date asc;
+
+
